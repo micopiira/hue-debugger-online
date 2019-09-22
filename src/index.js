@@ -6,8 +6,8 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-if (location.protocol === 'https:') {
-    location.protocol = 'http:'; 
+if (window.location.protocol === 'https:') {
+    window.location.protocol = 'http:'; 
 }
 
 // If you want your app to work offline and load faster, you can change
