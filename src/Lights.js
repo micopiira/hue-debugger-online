@@ -2,29 +2,31 @@ import React, { useEffect, useState } from 'react';
 import hue from 'hue-api';
 import ReactJsonView from 'react-json-view';
 
-function Lights({bridge, username}) {
-    const [lights, setLights] = useState();
-      
+function Lights({bridge, username, currentPage}) {
+    const [data, setData] = useState({});
+
     useEffect(() => {
       if (bridge && username) {
-        hue(bridge, false).api({username}).getLights().then(lights => setLights(lights));
+        setData({});
+        hue(bridge, false).getJson({username, path: '/' + currentPage}).then(res => {
+            setData(res);
+        });
       }
-    }, [bridge, username]);
+    }, [bridge, username, currentPage]);
   
     const handleEdit = edit => {
       if (edit.namespace[1] !== 'state') {
         return false;
       }
-      hue(bridge, false).api({username}).setLightState({lightId: edit.namespace[0], newState: {[edit.name]: edit.new_value}})
-        .then(res => console.log(res));
+      hue(bridge, false).api({username}).setLightState({lightId: edit.namespace[0], newState: {[edit.name]: edit.new_value}});
     }
   
     return (
-      <ReactJsonView src={lights}
-        name="Lights"
-        theme="monokai"
-        onEdit={handleEdit}
-        shouldCollapse={field => ['capabilities', 'config', 'swupdate'].includes(field.name)}/>
+      <ReactJsonView src={data}
+        name={currentPage}
+        theme="rjv-default"
+        onEdit={currentPage === 'lights' ? handleEdit : undefined}
+        shouldCollapse={field => Object.keys(data).length > 20 ? field.namespace.length > 1 : field.namespace.length > 3}/>
     );
   }
 
