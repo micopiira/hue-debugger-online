@@ -38,12 +38,12 @@ function LightController({bridge, username}) {
                             style={{backgroundColor: light.state.on ? `hsl(${HSL.H}, 100%, 50%)` : 'rgb(90 ,90 ,90)'}}>
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-1"><Image width="100%" height="100%"/></div>
+                            <div className="col-1"><Image width="24px" height="24px"/></div>
                             <div className="col">
                                 <strong>{light.name}</strong>
                             </div>
-                            <div className="col-1">
-                                <div className="custom-control custom-switch">
+                            <div className="col-3">
+                                <div className="custom-control custom-switch float-right">
                                 <input className="custom-control-input" id={`customSwitch${lightId}`} type="checkbox" checked={light.state.on} onChange={() => setLightState(lightId, {on: !light.state.on})}/>
                                 <label className="custom-control-label" htmlFor={`customSwitch${lightId}`}/>
                                 </div>
@@ -51,7 +51,7 @@ function LightController({bridge, username}) {
                         </div>
                         {light.state.on && light.state.bri && <div className="row">
                             <div className="col">
-                                <input className="custom-range" style={{padding: 0}} type="range" defaultValue={light.state.bri} min={0} max={254} onMouseUp={e => setLightState(lightId, {bri: parseInt(e.target.value)})}/>
+                                <input className="custom-range" type="range" defaultValue={light.state.bri} min={0} max={254} onMouseUp={e => setLightState(lightId, {bri: parseInt(e.target.value)})}/>
                             </div>
                         </div>}
                     </div>
