@@ -6,6 +6,9 @@ const archeTypeAliases = {
     huelightstrip: 'HeroesLightstrip'
 };
 
+/**
+ * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Interconversion
+ */
 const HSVtoHSL = HSV => {
     const L = HSV.V - HSV.V * HSV.S / 2;
     const S = (L ===0 || L === 1) ? 0 : (HSV.V - L) / Math.min(L, 1 - L);
