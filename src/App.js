@@ -1,77 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState, Suspense} from 'react';
 import './App.css';
 import hue from 'hue-api';
-import Lights from './Lights';
+import {handleJsonResponse} from './fetchUtils';
+import LightController from "./LightController";
 
-const checkStatus = res => {
-  if (res.status >= 200 && res.status < 300) {
-    return res
-  } else {
-    let err = new Error(res.statusText)
-    err.response = res
-    throw err
-  }
-}
+const Debugger = React.lazy(() => import('./Debugger'));
 
 const getBridge = () => hue().bridgeDiscovery.nupnpScan()
-  .then(result => result[0].internalipaddress ? result[0].internalipaddress : prompt('Could not find any bridges using N-UPnP scan. Give bridge IP Address manually:'))
-  .then(ip => ip.startsWith('http') ? ip : 'http://' + ip);
+    .then(result => result[0].internalipaddress ? result[0].internalipaddress : prompt('Could not find any bridges using N-UPnP scan. Give bridge IP Address manually:'))
+    .then(ip => ip.startsWith('http') ? ip : 'http://' + ip);
 
 function App() {
-  const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
-  const [username, setUsername] = useState(localStorage.getItem('username'));
-  const [currentPage, setCurrentPage] = useState('lights');
+    const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
+    const [username, setUsername] = useState(localStorage.getItem('username'));
 
-  const pages = ['lights', 'sensors', 'groups', 'schedules', 'scenes', 'rules', 'resourcelinks', 'capabilities'];
+    useEffect(() => {
+        if (bridge) {
+            localStorage.setItem('bridge', bridge);
+        } else {
+            getBridge().then(bridge => setBridge(bridge));
+        }
 
-  useEffect(() => {
-    if (username) {
-      localStorage.setItem('username', username);
-    } else {
-      alert('Press the link button on the bridge, THEN click ok.');
-      fetch(bridge + '/api', {method: 'POST', body: JSON.stringify({devicetype: 'testing#testing'})})
-        .then(checkStatus)
-        .then(res => res.json())
-        .then(json => {
-          if (json[0].error) throw new Error(json[0].error.description);
-        })
-        .then(json => {
-          setUsername(json[0].success.username);
-        }).catch(error => alert(error));
-    }
-    if (bridge) {
-      localStorage.setItem('bridge', bridge);
-    } else {
-      getBridge().then(bridge => setBridge(bridge));
-    }
-  }, [username, bridge]);
+        if (username) {
+            localStorage.setItem('username', username);
+        } else if (bridge) {
+            alert(`Press the link button on bridge ${bridge}, THEN click ok.`);
+            fetch(bridge + '/api', {method: 'POST', body: JSON.stringify({devicetype: 'testing#testing'})})
+                .then(handleJsonResponse)
+                .then(json =>
+                    json[0].error ? Promise.reject(new Error(json[0].error.description)) : json
+                )
+                .then(json => {
+                    console.log(json);
+                    setUsername(json[0].success.username);
+                }).catch(error => {
+                console.error(error);
+                alert(error);
+            });
+        }
+    }, [username, bridge]);
 
-  return (
-    <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="navbar-brand mr-auto" href="#">Hue debugger online</a>
-        <span className="badge badge-pill badge-light">{bridge}</span>
-      </nav>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-2">
-            <nav className="nav nav-pills flex-column">
-              {pages.map(page => 
-                // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a key={page} href="#" style={{textTransform: 'capitalize'}} className={['nav-link'].concat(currentPage === page ? 'active' : []).join(' ')} onClick={() => setCurrentPage(page)}>
-                  {page}
-                </a>
-              )}
+    return (
+        <div className="App bg-dark text-light" style={{height: '100%'}}>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className="navbar-brand mr-auto" href="#">Hue online</a>
+                {bridge ?
+                    <span
+                        className={["badge badge-pill"].concat(username ? 'badge-success' : 'badge-warning').join(' ')}
+                        title={username ? 'Connected' : 'Not linked'}
+                    >{bridge}</span>
+                    : <span className="badge badge-pill badge-danger">No bridges found</span>
+                }
             </nav>
-          </div>
-          <div className="col">
-            <Lights bridge={bridge} username={username} currentPage={currentPage}/>
-          </div>
+            <div className="container-fluid">
+                <LightController bridge={bridge} username={username}/>
+                <Suspense fallback={''}>
+                    {process.env.NODE_ENV === 'development' && <Debugger bridge={bridge} username={username}/>}
+                </Suspense>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;
