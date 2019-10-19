@@ -1,25 +1,15 @@
 import hue from 'hue-api';
-import React, { useEffect, useState } from 'react';
-const requireIcon = require.context('./HueIconPack2019', true, /\.svg$/);
-const allIcons = requireIcon.keys();
+import React, { useEffect, useState, Suspense } from 'react';
 
 const archeTypeAliases = {
-    sultanbulb: 'bulbsSultan',
-    huelightstrip: 'heroesLightstrip'
+    sultanbulb: 'BulbsSultan',
+    huelightstrip: 'HeroesLightstrip'
 };
 
 const HSVtoHSL = HSV => {
     const L = HSV.V - HSV.V * HSV.S / 2;
     const S = (L ===0 || L === 1) ? 0 : (HSV.V - L) / Math.min(L, 1 - L);
     return {H: HSV.H, S, L};
-};
-
-const getIcon = light => {
-    if (light.type === 'On/Off plug-in unit') {
-        return requireIcon('./devicesPlug.svg');
-    }
-    const iconPath = './' + (archeTypeAliases[light.config.archetype] || light.config.archetype)  + '.svg';
-    return allIcons.includes(iconPath) ? requireIcon(iconPath) : requireIcon('./bulbsClassic.svg')
 };
 
 function LightController({bridge, username}) {
@@ -42,13 +32,16 @@ function LightController({bridge, username}) {
             {Object.keys(lights).map(lightId => {
                 const light = lights[lightId];
                 const HSL = HSVtoHSL({H: light.state.hue/(4369/24), S: light.state.sat/254, V: light.state.bri/254});
-                return <div key={light.uniqueid}
-                            className="card mb-2 text-dark"
-                            style={{backgroundColor: `hsl(${HSL.H}, 100%, 50%)`}}>
+                const Image = React.lazy(() => import(`./HueIconPack2019/${archeTypeAliases[light.config.archetype]}`).catch(() => import('./HueIconPack2019/BulbsClassic')));
+                return <Suspense fallback={''} key={light.uniqueid}><div
+                            className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
+                            style={{backgroundColor: light.state.on ? `hsl(${HSL.H}, 100%, 50%)` : 'rgb(90 ,90 ,90)'}}>
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-1"><img src={getIcon(light)} alt=""/></div>
-                            <div className="col"><strong>{light.name}</strong></div>
+                            <div className="col-1"><Image width="100%" height="100%"/></div>
+                            <div className="col">
+                                <strong>{light.name}</strong>
+                            </div>
                             <div className="col-1">
                                 <div className="custom-control custom-switch">
                                 <input className="custom-control-input" id={`customSwitch${lightId}`} type="checkbox" checked={light.state.on} onChange={() => setLightState(lightId, {on: !light.state.on})}/>
@@ -62,7 +55,7 @@ function LightController({bridge, username}) {
                             </div>
                         </div>}
                     </div>
-                </div>
+                </div></Suspense>
             })}
         </div>
     );

@@ -1,0 +1,13 @@
+import React from "react";
+
+const SvgRoomsCloset = props => (
+  <svg width="1em" height="1em" viewBox="0 0 32 32" {...props}>
+    <path
+      d="M24 9h-4a1 1 0 110-2h4a1 1 0 110 2zm0 6h-4a1 1 0 110-2h4a1 1 0 110 2zm0 6h-4a1 1 0 110-2h4a1 1 0 110 2zm-7 2a1 1 0 11-2 0V5a1 1 0 112 0v18zm-5-8h-2a1 1 0 110-2h2a1 1 0 110 2zM26 1H6a1 1 0 00-1 1v24a1 1 0 001 1h1v1a1 1 0 102 0v-1h14v1a1 1 0 102 0v-1h1a1 1 0 001-1V2a1 1 0 00-1-1z"
+      fill="currentColor"
+      fillRule="evenodd"
+    />
+  </svg>
+);
+
+export default SvgRoomsCloset;
