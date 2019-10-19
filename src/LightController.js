@@ -31,8 +31,9 @@ function LightController({bridge, username}) {
         <div>
             {Object.keys(lights).map(lightId => {
                 const light = lights[lightId];
-                const HSL = HSVtoHSL({H: light.state.hue/(4369/24), S: light.state.sat/254, V: light.state.bri/254});
-                const hslCss = `hsl(${HSL.H}, ${HSL.S*100}%, ${HSL.L*100}%)`;
+                const HSV = {H: light.state.hue/65535*360, S: light.state.sat/254, V: 1};//(light.state.bri-1)/253};
+                const HSL = HSVtoHSL(HSV);
+                const hslCss = `hsl(${parseInt(HSL.H)}, ${parseInt(HSL.S*100)}%, ${parseInt(HSL.L*100)}%)`;
                 const Image = React.lazy(() => import(`./HueIconPack2019/${archeTypeAliases[light.config.archetype]}`).catch(() => import('./HueIconPack2019/BulbsClassic')));
                 return <Suspense fallback={''} key={light.uniqueid}><div
                             className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
