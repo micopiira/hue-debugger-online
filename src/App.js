@@ -8,7 +8,13 @@ const Debugger = React.lazy(() => import('./Debugger'));
 
 const getBridge = () => hue().bridgeDiscovery.nupnpScan()
     .then(result => result[0].internalipaddress ? result[0].internalipaddress : prompt('Could not find any bridges from your local network using N-UPnP scan. Give bridge IP Address manually:'))
-    .then(ip => ip.startsWith('http') ? ip : window.location.protocol + '//' + ip);
+    .then(ip => ip.startsWith('http') ? ip : window.location.protocol + '//' + ip)
+    .then(ip => {
+        if (window.location.protocol === 'https:') {
+            alert(`To use HTTPS you need to visit your bridge IP address (${ip}) and accept the self-signed certificate.`);
+        }
+        return ip;
+    });
 
 function App() {
     const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
