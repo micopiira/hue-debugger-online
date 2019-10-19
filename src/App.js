@@ -8,7 +8,7 @@ const Debugger = React.lazy(() => import('./Debugger'));
 
 const getBridge = () => hue().bridgeDiscovery.nupnpScan()
     .then(result => result[0].internalipaddress ? result[0].internalipaddress : prompt('Could not find any bridges from your local network using N-UPnP scan. Give bridge IP Address manually:'))
-    .then(ip => ip.startsWith('http') ? ip : 'http://' + ip);
+    .then(ip => ip.startsWith('http') ? ip : window.location.protocol + '//' + ip);
 
 function App() {
     const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
