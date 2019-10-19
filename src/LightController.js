@@ -32,11 +32,12 @@ function LightController({bridge, username}) {
             {Object.keys(lights).map(lightId => {
                 const light = lights[lightId];
                 const HSL = HSVtoHSL({H: light.state.hue/(4369/24), S: light.state.sat/254, V: light.state.bri/254});
+                const hslCss = `hsl(${HSL.H}, ${HSL.S*100}%, ${HSL.L*100}%)`;
                 const Image = React.lazy(() => import(`./HueIconPack2019/${archeTypeAliases[light.config.archetype]}`).catch(() => import('./HueIconPack2019/BulbsClassic')));
                 return <Suspense fallback={''} key={light.uniqueid}><div
                             className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
-                            style={{backgroundColor: light.state.on ? `hsl(${HSL.H}, 100%, 50%)` : 'rgb(90 ,90 ,90)'}}>
-                    <div className="card-body">
+                            style={{backgroundColor: light.state.on ?  hslCss : 'rgb(90, 90, 90)'}}>
+                    <div className="card-body" style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
                         <div className="row">
                             <div className="col-1"><Image width="24px" height="24px"/></div>
                             <div className="col">

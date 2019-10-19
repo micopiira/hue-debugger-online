@@ -41,7 +41,7 @@ function App() {
     }, [username, bridge]);
 
     return (
-        <div className="App bg-dark text-light" style={{height: '100%'}}>
+        <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="navbar-brand mr-auto" href="#"><strong>Hue online</strong></a>
