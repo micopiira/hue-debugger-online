@@ -53,7 +53,7 @@ function App() {
                     : <span className="badge badge-pill badge-danger">No bridges found</span>
                 }
             </nav>
-            <div className="container-fluid">
+            <div className="container">
                 <LightController bridge={bridge} username={username}/>
                 <Suspense fallback={''}>
                     {process.env.NODE_ENV === 'development' && <Debugger bridge={bridge} username={username}/>}
