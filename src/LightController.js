@@ -17,13 +17,19 @@ function LightController({bridge, username}) {
 
     const setLightState = (lightId, newState) => {
         const api = hue(bridge, false).api({username});
-        api.setLightState({lightId, newState})
-            .then(() => api.getLights().then(lights => setLights(lights)));
+        api.setLightState({lightId, newState}).then(() => api.getLights().then(lights => setLights(lights)))
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
     };
 
     useEffect(() => {
         if (bridge && username) {
-            hue(bridge, false).api({username}).getLights().then(res => setLights(res));
+            hue(bridge, false).api({username}).getLights().then(res => setLights(res)).catch(error => {
+                console.error(error);
+                alert(error);
+            });
         }
       }, [bridge, username]);
     

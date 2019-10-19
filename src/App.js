@@ -18,25 +18,25 @@ function App() {
         if (bridge) {
             localStorage.setItem('bridge', bridge);
         } else {
-            getBridge().then(bridge => setBridge(bridge));
+            getBridge().then(bridge => setBridge(bridge)).catch(error => {
+                console.error(error);
+                alert(error);
+            });
         }
 
         if (username) {
             localStorage.setItem('username', username);
         } else if (bridge) {
             alert(`Press the link button on bridge ${bridge}, THEN click ok.`);
-            fetch(bridge + '/api', {method: 'POST', body: JSON.stringify({devicetype: 'testing#testing'})})
+            fetch(bridge + '/api', {method: 'POST', body: JSON.stringify({devicetype: 'hueonline'})})
                 .then(handleJsonResponse)
-                .then(json =>
-                    json[0].error ? Promise.reject(new Error(json[0].error.description)) : json
-                )
-                .then(json => {
-                    console.log(json);
-                    setUsername(json[0].success.username);
-                }).catch(error => {
-                console.error(error);
-                alert(error);
-            });
+                .then(json => json[0])
+                .then(json => json.error ? Promise.reject(new Error(json.error.description)) : json)
+                .then(json => setUsername(json.success.username))
+                .catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
         }
     }, [username, bridge]);
 
