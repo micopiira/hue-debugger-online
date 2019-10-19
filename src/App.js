@@ -7,7 +7,7 @@ import LightController from "./LightController";
 const Debugger = React.lazy(() => import('./Debugger'));
 
 const getBridge = () => hue().bridgeDiscovery.nupnpScan()
-    .then(result => result[0].internalipaddress ? result[0].internalipaddress : prompt('Could not find any bridges using N-UPnP scan. Give bridge IP Address manually:'))
+    .then(result => result[0].internalipaddress ? result[0].internalipaddress : prompt('Could not find any bridges from your local network using N-UPnP scan. Give bridge IP Address manually:'))
     .then(ip => ip.startsWith('http') ? ip : 'http://' + ip);
 
 function App() {
