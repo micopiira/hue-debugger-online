@@ -26,10 +26,15 @@ function LightController({bridge, username}) {
 
     useEffect(() => {
         if (bridge && username) {
-            hue(bridge, false).api({username}).getLights().then(res => setLights(res)).catch(error => {
-                console.error(error);
-                alert(error);
-            });
+            const fetchLights = () => {
+                hue(bridge, false).api({username}).getLights().then(res => setLights(res)).catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
+            };
+            fetchLights();
+            const interval = setInterval(fetchLights, 5000);
+            return () => clearInterval(interval);
         }
       }, [bridge, username]);
     
