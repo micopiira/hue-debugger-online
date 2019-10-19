@@ -41,16 +41,14 @@ function LightController({bridge, username}) {
         <div>
             {Object.keys(lights).map(lightId => {
                 const light = lights[lightId];
-                const HSV = {H: light.state.hue/(4369/24), S: light.state.sat/254, V: light.state.bri/254};
-                const HSL = HSVtoHSL(HSV);
-                console.log({lightId, HSL});
+                const HSL = HSVtoHSL({H: light.state.hue/(4369/24), S: light.state.sat/254, V: light.state.bri/254});
                 return <div key={light.uniqueid}
-                            className={['card mb-2'].concat(HSL.L > 0.5 || isNaN(HSL.L) ? 'text-dark' : 'text-light').join(' ')}
-                            style={{backgroundColor: `hsl(${HSL.H}, ${parseInt(HSL.S*100)}%, ${parseInt(HSL.L*100)}%)`}}>
+                            className="card mb-2 text-dark"
+                            style={{backgroundColor: `hsl(${HSL.H}, 100%, 50%)`}}>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-1"><img src={getIcon(light)} alt=""/></div>
-                            <div className="col">{light.name}</div>
+                            <div className="col"><strong>{light.name}</strong></div>
                             <div className="col-1">
                                 <div className="custom-control custom-switch">
                                 <input className="custom-control-input" id={`customSwitch${lightId}`} type="checkbox" checked={light.state.on} onChange={() => setLightState(lightId, {on: !light.state.on})}/>
@@ -58,7 +56,7 @@ function LightController({bridge, username}) {
                                 </div>
                             </div>
                         </div>
-                        {light.state.bri && <div className="row">
+                        {light.state.on && light.state.bri && <div className="row">
                             <div className="col">
                                 <input className="custom-range" style={{padding: 0}} type="range" defaultValue={light.state.bri} min={0} max={254} onMouseUp={e => setLightState(lightId, {bri: parseInt(e.target.value)})}/>
                             </div>
