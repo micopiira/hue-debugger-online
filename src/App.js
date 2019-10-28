@@ -1,4 +1,4 @@
-import React, {useEffect, useState, Suspense} from 'react';
+import React, {useEffect, useState, Suspense, StrictMode} from 'react';
 import './App.css';
 import hue from 'hue-api';
 import {handleJsonResponse} from './fetchUtils';
@@ -47,25 +47,27 @@ function App() {
     }, [username, bridge]);
 
     return (
-        <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a className="navbar-brand mr-auto" href="#"><strong>Hue online</strong></a>
-                {bridge ?
-                    <span
-                        className={["badge badge-pill"].concat(username ? 'badge-success' : 'badge-warning').join(' ')}
-                        title={username ? 'Connected' : 'Not linked'}
-                    >{bridge}</span>
-                    : <span className="badge badge-pill badge-danger">No bridges found</span>
-                }
-            </nav>
-            <div className="container">
-                <LightController bridge={bridge} username={username}/>
-                <Suspense fallback={''}>
-                    {process.env.NODE_ENV === 'development' && <Debugger bridge={bridge} username={username}/>}
-                </Suspense>
+        <StrictMode>
+            <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                    <a className="navbar-brand mr-auto" href="#"><strong>Hue online</strong></a>
+                    {bridge ?
+                        <span
+                            className={["badge badge-pill"].concat(username ? 'badge-success' : 'badge-warning').join(' ')}
+                            title={username ? 'Connected' : 'Not linked'}
+                        >{bridge}</span>
+                        : <span className="badge badge-pill badge-danger">No bridges found</span>
+                    }
+                </nav>
+                <div className="container">
+                    <LightController bridge={bridge} username={username}/>
+                    <Suspense fallback={''}>
+                        {process.env.NODE_ENV === 'development' && <Debugger bridge={bridge} username={username}/>}
+                    </Suspense>
+                </div>
             </div>
-        </div>
+        </StrictMode>
     );
 }
 
