@@ -1,19 +1,12 @@
 import hue from 'hue-api';
 import React, { useEffect, useState, Suspense } from 'react';
 import BulbIcon from './BulbIcon';
+import {objectToArray} from "./utils";
+import {cie_to_rgb} from "./cie_rgb_converter";
 
 const archeTypeAliases = {
     sultanbulb: 'BulbsSultan',
     huelightstrip: 'HeroesLightstrip'
-};
-
-/**
- * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Interconversion
- */
-const HSVtoHSL = HSV => {
-    const L = HSV.V - HSV.V * HSV.S / 2;
-    const S = (L ===0 || L === 1) ? 0 : (HSV.V - L) / Math.min(L, 1 - L);
-    return {H: HSV.H, S, L};
 };
 
 function LightController({bridge, username}) {
@@ -22,7 +15,7 @@ function LightController({bridge, username}) {
     const setLightState = (lightId, newState) => {
         const api = hue(bridge, false).api({username});
         api.setLightState({lightId, newState})
-            .then(() => api.getLights().then(lights => setLights(Object.keys(lights).map(key => ({...lights[key], id: key})))))
+            .then(() => api.getLights().then(lights => setLights(objectToArray(lights))))
             .catch(error => {
                 console.error(error);
                 alert(error);
@@ -33,7 +26,7 @@ function LightController({bridge, username}) {
         if (bridge && username) {
             const fetchLights = () => {
                 hue(bridge, false).api({username}).getLights()
-                    .then(lights => Object.keys(lights).map(key => ({...lights[key], id: key})))
+                    .then(lights => objectToArray(lights))
                     .then(lights => setLights(lights))
                     .catch(error => {
                         console.error(error);
@@ -50,12 +43,13 @@ function LightController({bridge, username}) {
         <div>
             {lights.map(light => {
                 const lightId = light.id;
-                const HSV = {H: light.state.hue/65535*360, S: light.state.sat/254, V: 1};//(light.state.bri-1)/253};
-                const HSL = HSVtoHSL(HSV);
-                const hslCss = `hsl(${parseInt(HSL.H)}, ${parseInt(HSL.S*100)}%, ${parseInt(HSL.L*100)}%)`;
+                const backgroundColor = (() => {
+                    if (!light.state.on) return 'rgb(90, 90, 90)';
+                    return light.state.xy ? `rgb(${cie_to_rgb(light.state.xy[0], light.state.xy[1]).join(',')})` : 'rgb(255,255,255)'
+                })();
                 return <Suspense fallback={''} key={light.uniqueid}><div
                             className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
-                            style={{backgroundColor: light.state.on ?  hslCss : 'rgb(90, 90, 90)'}}>
+                            style={{backgroundColor}}>
                     <div className="card-body" style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
                         <div className="row">
                             <div className="col-1"><BulbIcon icon={archeTypeAliases[light.config.archetype]}/></div>
