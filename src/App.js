@@ -2,8 +2,15 @@ import React, {useEffect, useState, Suspense, StrictMode} from 'react';
 import './App.css';
 import hue from 'hue-api';
 import {handleJsonResponse} from './fetchUtils';
-import LightController from "./LightController";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from 'react-router-dom';
 
+const LightList = React.lazy(() => import('./LightList'));
+const LightController = React.lazy(() => import('./LightController'));
 const Debugger = React.lazy(() => import('./Debugger'));
 
 const getBridge = () => hue().bridgeDiscovery.nupnpScan()
@@ -48,25 +55,36 @@ function App() {
 
     return (
         <StrictMode>
-            <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <a className="navbar-brand mr-auto" href="#"><strong>Hue online</strong></a>
-                    {bridge ?
-                        <span
-                            className={["badge badge-pill"].concat(username ? 'badge-success' : 'badge-warning').join(' ')}
-                            title={username ? 'Connected' : 'Not linked'}
-                        >{bridge}</span>
-                        : <span className="badge badge-pill badge-danger">No bridges found</span>
-                    }
-                </nav>
-                <div className="container">
-                    <LightController bridge={bridge} username={username}/>
-                    <Suspense fallback={''}>
-                        {process.env.NODE_ENV === 'development' && <Debugger bridge={bridge} username={username}/>}
-                    </Suspense>
+            <Router>
+                <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                        <Link to="/" className="navbar-brand mr-auto"><strong>Hue online</strong></Link>
+                        {bridge ?
+                            <span
+                                className={["badge badge-pill"].concat(username ? 'badge-success' : 'badge-warning').join(' ')}
+                                title={username ? 'Connected' : 'Not linked'}
+                            >{bridge}</span>
+                            : <span className="badge badge-pill badge-danger">No bridges found</span>
+                        }
+                    </nav>
+                    <div className="container">
+                        <Suspense fallback={'Loading...'}>
+                            <Switch>
+                                <Route path="/debugger">
+                                    <Debugger bridge={bridge} username={username}/>
+                                </Route>
+                                <Route path="/:lightId">
+                                    <LightController bridge={bridge} username={username}/>
+                                </Route>
+                                <Route path="/">
+                                    <LightList bridge={bridge} username={username}/>
+                                </Route>
+                            </Switch>
+                        </Suspense>
+                    </div>
                 </div>
-            </div>
+            </Router>
         </StrictMode>
     );
 }

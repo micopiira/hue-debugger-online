@@ -41,7 +41,7 @@
 const gammaCorrect = input => (input > 0.04045) ? Math.pow((input + 0.055) / (1.0 + 0.055), 2.4) : (input / 12.92);
 const reverseGammaCorrection = input => input <= 0.0031308 ? 12.92 * input : (1.0 + 0.055) * Math.pow(input, (1.0 / 2.4)) - 0.055;
 const XYZtoxy = (X, Y, Z) => ([X, Y].map(it => (it / (X + Y + Z)).toFixed(4)));
-const toNumber = input => isNaN(input) ? 0 : input;
+const toNumber = input => isNaN(input) ? 0 : Number(input);
 
 /**
  * Converts CIE color space to RGB color space
