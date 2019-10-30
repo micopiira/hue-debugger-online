@@ -1,7 +1,6 @@
 import React from 'react';
 import ColorWheel from "./ColorWheel";
 import hue from "hue-api";
-import {objectToArray} from "./utils";
 import { useParams } from 'react-router-dom';
 import {rgb_to_cie} from "./cie_rgb_converter";
 
