@@ -9,8 +9,7 @@ function LightController({bridge, username}) {
 
     const handleColorChange = ({r,g,b}) => {
         const xy = rgb_to_cie(r, g, b);
-        console.log({xy});
-        setLightState({xy});
+        setLightState({xy, on: true});
     };
 
     const setLightState = newState => {
