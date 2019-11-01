@@ -54,7 +54,7 @@ function LightList({bridge, username}) {
 
                     <div className="card-body" style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
                         <div className="row">
-                            <div className="col-1"><BulbIcon icon={archeTypeAliases[light.config.archetype]}/></div>
+                            <div className="col-1"><BulbIcon width="100%" height="100%" icon={archeTypeAliases[light.config.archetype]}/></div>
                             <div className="col">
                                 <strong>{light.name}</strong>
                             </div>
