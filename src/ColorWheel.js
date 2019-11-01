@@ -8,7 +8,9 @@ function ColorWheel({onColorClick}) {
 
     const handleClick = event => {
         const data = canvasRef.current.getContext('2d').getImageData(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 1, 1).data;
-        onColorClick({r: data[0], g: data[1], b: data[2]});
+        if (data[3] === 255) {
+            onColorClick({r: data[0], g: data[1], b: data[2]});
+        }
     };
 
     useEffect(() => {
