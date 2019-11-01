@@ -70,7 +70,7 @@ function LightList({bridge, username}) {
                                 <input className="custom-range" type="range" defaultValue={light.state.bri} min={0} max={254} onMouseUp={e => setLightState(lightId, {bri: parseInt(e.target.value)})}/>
                             </div>
                         </div>}
-                        <Link to={`/${lightId}`} className="stretched-link"/>
+                        {light.capabilities.control.colorgamuttype && <Link to={`/${lightId}`} className="stretched-link"/>}
                     </div>
 
                 </div>
