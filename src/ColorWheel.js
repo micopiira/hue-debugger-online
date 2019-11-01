@@ -1,9 +1,10 @@
-import React, {useRef, useEffect, useState} from "react";
+import React, {useRef, useEffect } from "react";
+import useElementSize from "./hooks/useElementSize";
 
 function ColorWheel({onColorClick}) {
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
-    const [dimensions, setDimensions] = useState({width: window.innerWidth, height: window.innerWidth});
+    const { width } = useElementSize(containerRef);
 
     const handleClick = event => {
         const data = canvasRef.current.getContext('2d').getImageData(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 1, 1).data;
@@ -11,20 +12,12 @@ function ColorWheel({onColorClick}) {
     };
 
     useEffect(() => {
-        const handleResize = () => setDimensions({height: window.innerWidth, width: window.innerWidth});
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    useEffect(() => {
+        if (!width) return;
         const canvas = canvasRef.current;
-        canvas.width = dimensions.width;
-        canvas.height = dimensions.height;
+        canvas.width = width;
+        canvas.height = width;
 
         const ctx = canvas.getContext('2d');
-
         const cx = canvas.width / 2;
         const cy = canvas.height / 2;
         const radius = canvas.height / 2;
@@ -54,7 +47,7 @@ function ColorWheel({onColorClick}) {
             }
         }
         ctx.putImageData(imageData, 0, 0);
-    }, [dimensions]);
+    }, [width]);
 
     return <div ref={containerRef}><canvas
         height={123}

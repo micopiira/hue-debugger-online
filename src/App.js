@@ -2,12 +2,8 @@ import React, {useEffect, useState, Suspense, StrictMode} from 'react';
 import './App.css';
 import hue from 'hue-api';
 import {handleJsonResponse} from './fetchUtils';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Nav from "./layout/Nav";
 
 const LightList = React.lazy(() => import('./LightList'));
 const LightController = React.lazy(() => import('./LightController'));
@@ -57,17 +53,7 @@ function App() {
         <StrictMode>
             <Router>
                 <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <Link to="/" className="navbar-brand mr-auto"><strong>Hue online</strong></Link>
-                        {bridge ?
-                            <span
-                                className={["badge badge-pill"].concat(username ? 'badge-success' : 'badge-warning').join(' ')}
-                                title={username ? 'Connected' : 'Not linked'}
-                            >{bridge}</span>
-                            : <span className="badge badge-pill badge-danger">No bridges found</span>
-                        }
-                    </nav>
+                    <Nav/>
                     <div className="container">
                         <Suspense fallback={'Loading...'}>
                             <Switch>
