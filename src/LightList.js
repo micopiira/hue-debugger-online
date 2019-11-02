@@ -4,6 +4,8 @@ import BulbIcon from './BulbIcon';
 import {objectToArray} from "./utils";
 import {cie_to_rgb} from "./cie_rgb_converter";
 import {Link} from "react-router-dom";
+import Nav from "./layout/Nav";
+import CustomSwitch from "./bootstrap/CustomSwitch";
 
 const archeTypeAliases = {
     sultanbulb: 'BulbsSultan',
@@ -41,7 +43,9 @@ function LightList({bridge, username}) {
       }, [bridge, username]);
     
     return (
-        <div>
+        <React.Fragment>
+            <Nav title="Hue online"/>
+            <div className="container">
             {lights.map(light => {
                 const lightId = light.id;
                 const backgroundColor = (() => {
@@ -51,17 +55,17 @@ function LightList({bridge, username}) {
                 return <div key={light.uniqueid}
                             className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
                             style={{backgroundColor}}>
-
                     <div className="card-body" style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
                         <div className="row">
-                            <div className="col-1"><BulbIcon icon={archeTypeAliases[light.config.archetype]}/></div>
+                            <div className="col-1">
+                                <BulbIcon width="100%" height="100%" icon={archeTypeAliases[light.config.archetype]}/>
+                            </div>
                             <div className="col">
                                 <strong>{light.name}</strong>
                             </div>
                             <div className="col-3" style={{zIndex: 2}}>
-                                <div className="custom-control custom-switch float-right">
-                                <input className="custom-control-input" id={`customSwitch${lightId}`} type="checkbox" checked={light.state.on} onChange={() => setLightState(lightId, {on: !light.state.on})}/>
-                                <label className="custom-control-label" htmlFor={`customSwitch${lightId}`}/>
+                                <div className="float-right">
+                                    <CustomSwitch id={`customSwitch${lightId}`} checked={light.state.on} onChange={() => setLightState(lightId, {on: !light.state.on})}/>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +79,8 @@ function LightList({bridge, username}) {
 
                 </div>
             })}
-        </div>
+            </div>
+        </React.Fragment>
     );
 }
 
