@@ -3,7 +3,6 @@ import './App.css';
 import hue from 'hue-api';
 import {handleJsonResponse} from './fetchUtils';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Nav from "./layout/Nav";
 
 const LightList = React.lazy(() => import('./LightList'));
 const LightController = React.lazy(() => import('./LightController'));
@@ -53,22 +52,13 @@ function App() {
         <StrictMode>
             <Router>
                 <div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-                    <Nav/>
-                    <div className="container">
-                        <Suspense fallback={'Loading...'}>
-                            <Switch>
-                                <Route path="/debugger">
-                                    <Debugger bridge={bridge} username={username}/>
-                                </Route>
-                                <Route path="/:lightId">
-                                    <LightController bridge={bridge} username={username}/>
-                                </Route>
-                                <Route path="/">
-                                    <LightList bridge={bridge} username={username}/>
-                                </Route>
-                            </Switch>
-                        </Suspense>
-                    </div>
+                    <Suspense fallback={'Loading...'}>
+                        <Switch>
+                            <Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
+                            <Route path="/:lightId" render={() => <LightController bridge={bridge} username={username}/>}/>
+                            <Route path="/" render={() => <LightList bridge={bridge} username={username}/>}/>
+                        </Switch>
+                    </Suspense>
                 </div>
             </Router>
         </StrictMode>
