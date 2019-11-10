@@ -56,9 +56,9 @@ function LightList({bridge, username}) {
                             className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
                             style={{backgroundColor}}>
                     <div className="card-body" style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
-                        <div className="row">
-                            <div className="col-1">
-                                <BulbIcon width="100%" height="100%" icon={archeTypeAliases[light.config.archetype]}/>
+                        <div className="row justify-content-center">
+                            <div className="col-auto">
+                                <BulbIcon width="1.5rem" height="1.5rem" icon={archeTypeAliases[light.config.archetype]}/>
                             </div>
                             <div className="col">
                                 <strong>{light.name}</strong>
