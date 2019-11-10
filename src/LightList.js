@@ -71,7 +71,9 @@ function LightList({bridge, username}) {
                         </div>
                         {light.state.on && light.state.bri && <div className="row">
                             <div className="col" style={{zIndex: 2}}>
-                                <input className="custom-range" type="range" defaultValue={light.state.bri} min={0} max={254} onMouseUp={e => setLightState(lightId, {bri: parseInt(e.target.value)})}/>
+                                <input className="custom-range" type="range" defaultValue={light.state.bri} min={0} max={254}
+                                       onTouchEnd={e => setLightState(lightId, {bri: parseInt(e.target.value)})}
+                                       onMouseUp={e => setLightState(lightId, {bri: parseInt(e.target.value)})}/>
                             </div>
                         </div>}
                         {light.capabilities.control.colorgamuttype && <Link to={`/${lightId}`} className="stretched-link"/>}
