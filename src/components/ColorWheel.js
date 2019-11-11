@@ -1,5 +1,5 @@
 import React, {useRef, useEffect } from "react";
-import useElementSize from "./hooks/useElementSize";
+import useElementSize from "../hooks/useElementSize";
 
 function ColorWheel({onColorClick}) {
     const containerRef = useRef(null);

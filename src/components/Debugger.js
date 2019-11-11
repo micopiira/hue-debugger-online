@@ -22,7 +22,7 @@ function Lights({bridge, username}) {
         return false;
       }
       hue(bridge, false).api({username}).setLightState({lightId: edit.namespace[0], newState: {[edit.name]: edit.new_value}});
-    }
+    };
   
     return (
       <div className="row">

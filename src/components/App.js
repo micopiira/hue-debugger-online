@@ -1,7 +1,7 @@
 import React, {useEffect, useState, Suspense, StrictMode} from 'react';
 import './App.css';
 import hue from 'hue-api';
-import {handleJsonResponse} from './fetchUtils';
+import {handleJsonResponse} from '../fetchUtils';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const LightList = React.lazy(() => import('./LightList'));
