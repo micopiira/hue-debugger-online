@@ -1,4 +1,25 @@
-@import '~bootstrap/scss/bootstrap.scss';
+$custom-range-track-bg: rgba(255, 255, 255, 0.5);
+$custom-range-track-height: 1.25rem;
+$custom-range-thumb-bg: white;
+$custom-range-thumb-width: 1.25rem;
+$custom-control-gutter: 0;
+$custom-control-indicator-bg: white;
+$custom-control-indicator-checked-bg: rgba(0, 0, 0, 0.2);
+$custom-control-indicator-size: 1.25rem;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/custom-forms";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/utilities";
 
 body {
 	margin: 0;
