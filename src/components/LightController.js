@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import ColorWheel from "./ColorWheel";
 import hue from "hue-api";
 import { useParams } from 'react-router-dom';
