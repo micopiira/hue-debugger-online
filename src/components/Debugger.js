@@ -28,8 +28,8 @@ function Lights({bridge, username}) {
 	};
 
 	return (
-		<div className="row">
-			<div className="col-2">
+		<div className="row h-100">
+			<div className="col-auto">
 				<nav className="nav nav-pills flex-column">
 					{pages.map(page =>
 						// eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -41,15 +41,16 @@ function Lights({bridge, username}) {
 					)}
 				</nav>
 			</div>
-			<div className="col">
+			<div className="col h-100">
+				<div className="mh-100" style={{backgroundColor: 'white', overflowX: 'scroll'}}>
 				<ReactJsonView src={data}
 							   name={currentPage}
 							   theme="rjv-default"
 							   onEdit={currentPage === 'lights' ? handleEdit : undefined}
 							   shouldCollapse={field => Object.keys(data).length > 20 ? field.namespace.length > 1 : field.namespace.length > 3}/>
+				</div>
 			</div>
 		</div>
-
 	);
 }
 
