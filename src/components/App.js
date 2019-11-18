@@ -3,6 +3,7 @@ import './App.css';
 import hue from 'hue-api';
 import {handleJsonResponse} from '../fetchUtils';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import ApiContext from "./ApiContext";
 
 const LightList = React.lazy(() => import('./LightList'));
 const LightController = React.lazy(() => import('./LightController'));
@@ -48,19 +49,23 @@ function App() {
 		}
 	}, [username, bridge]);
 
+	const hueApi = hue(bridge, false);
+	const bridgeApi = hueApi.api({username});
+
 	return (
 		<StrictMode>
 			<Router>
-				<div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-					<Suspense fallback={'Loading...'}>
-						<Switch>
-							<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
-							<Route path="/:lightId"
-								   render={() => <LightController bridge={bridge} username={username}/>}/>
-							<Route path="/" render={() => <LightList bridge={bridge} username={username}/>}/>
-						</Switch>
-					</Suspense>
-				</div>
+				<ApiContext.Provider value={{hue: hueApi, api: bridgeApi}}>
+					<div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
+						<Suspense fallback={'Loading...'}>
+							<Switch>
+								<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
+								<Route path="/:lightId" render={() => <LightController/>}/>
+								<Route path="/" render={() => <LightList/>}/>
+							</Switch>
+						</Suspense>
+					</div>
+				</ApiContext.Provider>
 			</Router>
 		</StrictMode>
 	);

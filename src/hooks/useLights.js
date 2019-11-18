@@ -1,17 +1,18 @@
-import {useEffect, useState, useCallback} from 'react';
-import hue from "hue-api";
+import {useEffect, useState, useCallback, useContext} from 'react';
+import ApiContext from "../components/ApiContext";
 
-export default function useLights({bridge, username}) {
+export default function useLights() {
 	const [lights, setLights] = useState({});
+	const {api} = useContext(ApiContext);
 
 	const fetchLights = useCallback(() => {
-		hue(bridge, false).api({username}).getLights()
+		api.getLights()
 			.then(lights => setLights(lights))
 			.catch(error => {
 				console.error(error);
 				alert(error);
 			});
-	}, [bridge, username]);
+	}, [api]);
 
 	useEffect(() => {
 		fetchLights();
