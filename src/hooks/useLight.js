@@ -2,10 +2,10 @@ import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import useLights from "./useLights";
 
-export default function useLight({bridge, username}) {
+export default function useLight() {
 	const {lightId} = useParams();
 	const [light, setLight] = useState();
-	const [lights, fetchLights] = useLights({bridge, username});
+	const [lights, fetchLights] = useLights();
 
 	useEffect(() => {
 		setLight(lights[lightId])
