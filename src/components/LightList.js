@@ -15,7 +15,7 @@ const archeTypeAliases = {
 
 function LightList() {
 	const [lights, fetchLights] = useLights();
-	const api = useContext(ApiContext);
+	const {api} = useContext(ApiContext);
 
 	const setLightState = (lightId, newState) => {
 		api.setLightState({lightId, newState})
