@@ -7,6 +7,7 @@ import CustomSwitch from "./bootstrap/CustomSwitch";
 import useLights from "../hooks/useLights";
 import CustomRange from "./bootstrap/CustomRange";
 import ApiContext from "./ApiContext";
+import Spinner from "./bootstrap/Spinner";
 
 const archeTypeAliases = {
 	sultanbulb: 'BulbsSultan',
@@ -35,7 +36,7 @@ function LightList() {
 						if (!light.state.on) return 'rgb(90, 90, 90)';
 						return light.state.xy ? `rgb(${cie_to_rgb(light.state.xy[0], light.state.xy[1]).join(',')})` : 'rgb(255,255,255)'
 					})();
-					return <React.Suspense fallback={''} key={light.uniqueid}>
+					return <React.Suspense fallback={<Spinner/>} key={light.uniqueid}>
 						<div className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
 							 style={{backgroundColor}}>
 							<div className="card-body"

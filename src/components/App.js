@@ -4,6 +4,7 @@ import hue from 'hue-api';
 import {handleJsonResponse} from '../fetchUtils';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import ApiContext from "./ApiContext";
+import Spinner from "./bootstrap/Spinner";
 
 const LightList = React.lazy(() => import('./LightList'));
 const LightController = React.lazy(() => import('./LightController'));
@@ -57,7 +58,7 @@ function App() {
 			<Router>
 				<ApiContext.Provider value={{hue: hueApi, api: bridgeApi}}>
 					<div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-						<Suspense fallback={'Loading...'}>
+						<Suspense fallback={<Spinner/>}>
 							<Switch>
 								<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
 								<Route path="/:lightId" render={() => <LightController/>}/>
