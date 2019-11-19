@@ -2,8 +2,8 @@
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Interconversion
  */
 export function HSVtoHSL({H, S, V}) {
-    const L = V - V * S / 2;
-    return {H, S: (L === 0 || L === 1) ? 0 : (V - L) / Math.min(L, 1 - L), L};
+	const L = V - V * S / 2;
+	return {H, S: (L === 0 || L === 1) ? 0 : (V - L) / Math.min(L, 1 - L), L};
 }
 
 /**
@@ -13,7 +13,7 @@ export function HSVtoHSL({H, S, V}) {
  * @returns {Array<T>}
  */
 export function objectToArray(object, keyProp = 'id') {
-    return Object.keys(object).map(key => ({...object[key], [keyProp]: key}));
+	return Object.keys(object).map(key => ({...object[key], [keyProp]: key}));
 }
 
 
