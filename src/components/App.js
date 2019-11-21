@@ -6,8 +6,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import ApiContext from "./ApiContext";
 import Spinner from "./bootstrap/Spinner";
 
-const LightList = React.lazy(() => import('./LightList'));
-const LightController = React.lazy(() => import('./LightController'));
+const [LightList, LightController] = ['./LightList', './LightController'].map(path => import(`${path}`)).map(promise => React.lazy(() => promise));
 const Debugger = React.lazy(() => import('./Debugger'));
 
 const getBridge = () => hue().bridgeDiscovery.nupnpScan()
