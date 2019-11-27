@@ -20,7 +20,7 @@ function LightController({light, fetchLight}) {
 
 	return (<React.Fragment>
 		{light ? <LightListItem light={light} lightId={lightId} setLightState={setLightState} icon={
-			<Link to="/" className="text-dark"><Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/></Link>
+			<Link to="/" style={{color: 'inherit'}}><Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/></Link>
 		}/> : <LoadingListItem/>}
 		<div className="container">
 			<ColorWheel onColorClick={handleColorChange}/>
