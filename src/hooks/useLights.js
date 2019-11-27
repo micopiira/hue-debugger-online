@@ -16,7 +16,7 @@ export default function useLights() {
 
 	useEffect(() => {
 		fetchLights();
-		const interval = setInterval(fetchLights, 5000);
+		const interval = setInterval(fetchLights, 15000);
 		return () => clearInterval(interval);
 	}, [fetchLights]);
 

@@ -1,18 +1,16 @@
 import React, {useContext} from 'react';
 import BulbIcon from './BulbIcon';
 import Nav from "./layout/Nav";
-import useLights from "../hooks/useLights";
 import ApiContext from "./ApiContext";
-import Spinner from "./bootstrap/Spinner";
 import LightListItem from "./LightListItem";
+import LoadingListItem from "./LoadingListItem";
 
 const archeTypeAliases = {
 	sultanbulb: 'BulbsSultan',
 	huelightstrip: 'HeroesLightstrip'
 };
 
-function LightList() {
-	const [lights, fetchLights] = useLights();
+function LightList({lights, fetchLights}) {
 	const {api} = useContext(ApiContext);
 
 	const setLightState = (lightId, newState) => {
@@ -29,7 +27,7 @@ function LightList() {
 			<Nav title="Hue online"/>
 			<div className="container">
 				{Object.entries(lights).map(([lightId, light]) => {
-					return <React.Suspense fallback={<Spinner/>} key={light.uniqueid}>
+					return <React.Suspense fallback={<LoadingListItem/>} key={light.uniqueid}>
 						<LightListItem light={light}
 									   lightId={lightId}
 									   setLightState={newState => setLightState(lightId, newState)}
