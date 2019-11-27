@@ -13,7 +13,7 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 				style={{backgroundColor}}>
 		<div className="card-body"
 			 style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
-			<div className="row justify-content-center">
+			<div className="row align-items-center mb-1">
 				<div className="col-auto">{icon}</div>
 				<div className="col">
 					<strong>{light.name}</strong>
