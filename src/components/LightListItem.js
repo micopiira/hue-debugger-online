@@ -9,11 +9,11 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 		if (!light.state.on) return 'rgb(90, 90, 90)';
 		return light.state.xy ? `rgb(${cie_to_rgb(light.state.xy[0], light.state.xy[1]).join(',')})` : 'rgb(255,255,255)'
 	})();
-	return <div className={['card mb-2'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
+	return <div className={['card mb-2 flex-fill'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
 				style={{backgroundColor}}>
-		<div className="card-body"
+		<div className="card-body d-flex flex-wrap align-items-center"
 			 style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
-			<div className="row align-items-center mb-1">
+			<div className="row align-items-center flex-grow-1">
 				<div className="col-auto">{icon}</div>
 				<div className="col">
 					<strong>{light.name}</strong>
@@ -24,11 +24,13 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 					</div>
 				</div>
 			</div>
-			{light.state.on && light.state.bri && <div className="row">
-				<div className="col" style={{zIndex: 2}}>
+			{light.state.on && light.state.bri && <>
+				<div className="w-100"/>
+				<div className="row flex-grow-1">
+				<div className="col mt-2" style={{zIndex: 2}}>
 					<CustomRange defaultValue={light.state.bri} min={0} max={254} onChange={e => setLightState({bri: parseInt(e.target.value)})}/>
 				</div>
-			</div>}
+			</div></>}
 			{light.capabilities.control.colorgamuttype && stretchedLink && <Link to={stretchedLink} className="stretched-link"/>}
 		</div>
 	</div>;
