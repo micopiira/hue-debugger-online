@@ -23,7 +23,7 @@ function LightList({lights, fetchLights}) {
 	};
 
 	return (
-		<React.Fragment>
+		<>
 			<Nav title="Hue online"/>
 			<div className="container">
 				<div className="row row-cols-1 row-cols-md-2">
@@ -38,7 +38,7 @@ function LightList({lights, fetchLights}) {
 				})}
 				</div>
 			</div>
-		</React.Fragment>
+		</>
 	);
 }
 

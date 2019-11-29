@@ -18,14 +18,14 @@ function LightController({light, fetchLight}) {
 
 	const setLightState = newState => api.setLightState({lightId, newState}).then(() => fetchLight());
 
-	return (<React.Fragment>
+	return (<>
 		{light ? <LightListItem light={light} lightId={lightId} setLightState={setLightState} icon={
 			<Link to="/" style={{color: 'inherit'}}><Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/></Link>
 		}/> : <LoadingListItem/>}
 		<div className="container">
 			<ColorWheel onColorClick={handleColorChange}/>
 		</div>
-	</React.Fragment>);
+	</>);
 }
 
 export default LightController;
