@@ -4,13 +4,14 @@ import hue from 'hue-api';
 import ApiContext from "./ApiContext";
 import ErrorBoundary from "./ErrorBoundary";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {LightsProvider} from "./LightsContext";
 import Spinner from "./bootstrap/Spinner";
-import LinkBridge from "./LinkBridge";
-import BridgeSetup from "./BridgeSetup";
-const [LightList, LightController] = ['./LightList', './LightController'].map(path => import(`${path}`))
-	.map(promise => React.lazy(() => promise));
+import {LightsProvider} from "./LightsContext";
+
+const LinkBridge = React.lazy(() => import('./LinkBridge'));
+const BridgeSetup = React.lazy(() => import('./BridgeSetup'));
 const Debugger = React.lazy(() => import('./Debugger'));
+const LightList = React.lazy(() => import(/* webpackPreload: true */ './LightList'));
+const LightController = React.lazy(() => import(/* webpackPrefetch: true */ './LightController'));
 
 function App() {
 	const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
