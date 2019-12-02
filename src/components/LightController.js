@@ -6,26 +6,29 @@ import ApiContext from "./ApiContext";
 import Octicon, {ChevronLeft} from '@primer/octicons-react';
 import LightListItem from "./LightListItem";
 import LoadingListItem from "./LoadingListItem";
+import {LightsContext} from "./LightsContext";
 
-function LightController({light, fetchLight}) {
+function LightController() {
 	const { api } = useContext(ApiContext);
 	const { lightId } = useParams();
+	const {lights, fetchLights} = useContext(LightsContext);
+	const light = lights[lightId];
 
 	const handleColorChange = ({r, g, b}) => {
 		const xy = rgb_to_cie(r, g, b);
 		return setLightState({xy, on: true});
 	};
 
-	const setLightState = newState => api.setLightState({lightId, newState}).then(() => fetchLight());
+	const setLightState = newState => api.setLightState({lightId, newState}).then(() => fetchLights());
 
-	return (<React.Fragment>
+	return (<>
 		{light ? <LightListItem light={light} lightId={lightId} setLightState={setLightState} icon={
 			<Link to="/" style={{color: 'inherit'}}><Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/></Link>
 		}/> : <LoadingListItem/>}
 		<div className="container">
 			<ColorWheel onColorClick={handleColorChange}/>
 		</div>
-	</React.Fragment>);
+	</>);
 }
 
 export default LightController;
