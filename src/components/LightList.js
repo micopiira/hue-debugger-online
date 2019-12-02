@@ -4,14 +4,16 @@ import Nav from "./layout/Nav";
 import ApiContext from "./ApiContext";
 import LightListItem from "./LightListItem";
 import LoadingListItem from "./LoadingListItem";
+import {LightsContext} from "./LightsContext";
 
 const archeTypeAliases = {
 	sultanbulb: 'BulbsSultan',
 	huelightstrip: 'HeroesLightstrip'
 };
 
-function LightList({lights, fetchLights}) {
+function LightList() {
 	const {api} = useContext(ApiContext);
+	const {lights, fetchLights} = useContext(LightsContext);
 
 	const setLightState = (lightId, newState) => {
 		api.setLightState({lightId, newState})
