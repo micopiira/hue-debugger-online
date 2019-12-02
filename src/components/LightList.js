@@ -5,7 +5,7 @@ import ApiContext from "./ApiContext";
 import LightListItem from "./LightListItem";
 import LoadingListItem from "./LoadingListItem";
 import {LightsContext} from "./LightsContext";
-import archetypeAliases from "../archetypeAliases";
+import {resolveIcon} from "../lightIconResolver";
 
 function LightList() {
 	const {api} = useContext(ApiContext);
@@ -31,7 +31,7 @@ function LightList() {
 									   lightId={lightId}
 									   setLightState={newState => setLightState(lightId, newState)}
 									   stretchedLink={`/${lightId}`}
-									   icon={<BulbIcon width="1.5rem" height="1.5rem" icon={archetypeAliases[light.config.archetype]}/>}/>
+									   icon={<BulbIcon width="1.5rem" height="1.5rem" icon={resolveIcon(light)}/>}/>
 					</React.Suspense></div>
 				})}
 				</div>
