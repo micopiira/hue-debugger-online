@@ -35,7 +35,7 @@ function App() {
 		<ErrorBoundary>
 			<ApiContext.Provider value={{hue: hueApi, api: bridgeApi}}>
 				<BrowserRouter>
-					<div className={['App min-vh-100'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')}>
+					<div className={['App h-100'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')}>
 							<Suspense fallback={<Spinner/>}>
 								<Switch>
 									<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>

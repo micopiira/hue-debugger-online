@@ -17,6 +17,7 @@ function ColorWheel({onColorClick}) {
 		if (!width) return;
 		const canvas = canvasRef.current;
 		canvas.width = width;
+		// noinspection JSSuspiciousNameCombination
 		canvas.height = width;
 
 		const ctx = canvas.getContext('2d');
@@ -51,11 +52,11 @@ function ColorWheel({onColorClick}) {
 		ctx.putImageData(imageData, 0, 0);
 	}, [width]);
 
-	return <div ref={containerRef}>
+	return <div ref={containerRef} className="d-flex justify-content-center">
 		<canvas
 			height={123}
 			width={123}
-			style={{maxWidth: '100%'}}
+			style={{maxWidth: '80vh'}}
 			ref={canvasRef}
 			onClick={handleClick}/>
 	</div>

@@ -38,8 +38,7 @@ body {
 }
 
 html, body, #root {
-	min-height: 100vh;
-	overflow: auto;
+	height: 100%;
 }
 
 code {
