@@ -6,6 +6,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Spinner from "./bootstrap/Spinner";
 import {LightsProvider} from "./LightsContext";
+import useMediaQuery from "react-responsive/src/useMediaQuery";
 
 const LinkBridge = React.lazy(() => import('./LinkBridge'));
 const BridgeSetup = React.lazy(() => import('./BridgeSetup'));
@@ -16,6 +17,7 @@ const LightController = React.lazy(() => import(/* webpackPrefetch: true */ './L
 function App() {
 	const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
 	const [username, setUsername] = useState(localStorage.getItem('username'));
+	const isDark = useMediaQuery({query: '(prefers-color-scheme: dark)'});
 
 	useEffect(() => {
 		if (bridge) {
@@ -33,8 +35,7 @@ function App() {
 		<ErrorBoundary>
 			<ApiContext.Provider value={{hue: hueApi, api: bridgeApi}}>
 				<BrowserRouter>
-					<div className="App text-light" style={{height: '100%', backgroundColor: 'hsl(210, 10%, 25%)'}}>
-
+					<div className={['App min-vh-100'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')}>
 							<Suspense fallback={<Spinner/>}>
 								<Switch>
 									<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
