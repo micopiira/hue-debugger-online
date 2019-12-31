@@ -25,7 +25,7 @@ function LightController() {
 		{light ? <LightListItem light={light} lightId={lightId} setLightState={setLightState} icon={
 			<Link to="/" style={{color: 'inherit'}}><Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/></Link>
 		}/> : <LoadingListItem/>}
-		<div className="container">
+		<div className="container mt-2">
 			<ColorWheel onColorClick={handleColorChange}/>
 		</div>
 	</>);

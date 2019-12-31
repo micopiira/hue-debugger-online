@@ -9,7 +9,7 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 		if (!light.state.on) return 'rgb(90, 90, 90)';
 		return light.state.xy ? `rgb(${cie_to_rgb(light.state.xy[0], light.state.xy[1]).join(',')})` : 'rgb(255,255,255)'
 	})();
-	return <div className={['card mb-2 flex-fill'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
+	return <div className={['card flex-fill'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
 				style={{backgroundColor}}>
 		<div className="card-body d-flex flex-wrap align-items-center"
 			 style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>

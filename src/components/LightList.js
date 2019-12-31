@@ -26,7 +26,7 @@ function LightList() {
 			<div className="container">
 				<div className="row row-cols-1 row-cols-md-2">
 				{Object.entries(lights).map(([lightId, light]) => {
-					return <div className="col d-flex" key={light.uniqueid}><React.Suspense fallback={<LoadingListItem/>}>
+					return <div className="col d-flex p-1" key={light.uniqueid}><React.Suspense fallback={<LoadingListItem/>}>
 						<LightListItem light={light}
 									   lightId={lightId}
 									   setLightState={newState => setLightState(lightId, newState)}
