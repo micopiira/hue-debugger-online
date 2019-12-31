@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {handleJsonResponse} from "../fetchUtils";
+import {handleJsonResponse} from "../../fetchUtils";
 import Octicon, {Alert} from '@primer/octicons-react';
 
 const TOTAL_TIME_SECONDS = 30;

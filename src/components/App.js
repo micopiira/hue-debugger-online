@@ -7,12 +7,13 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Spinner from "./bootstrap/Spinner";
 import {LightsProvider} from "./LightsContext";
 import useMediaQuery from "react-responsive/src/useMediaQuery";
+import Settings from "./pages/Settings";
 
-const LinkBridge = React.lazy(() => import('./LinkBridge'));
-const BridgeSetup = React.lazy(() => import('./BridgeSetup'));
-const Debugger = React.lazy(() => import('./Debugger'));
-const LightList = React.lazy(() => import(/* webpackPreload: true */ './LightList'));
-const LightController = React.lazy(() => import(/* webpackPrefetch: true */ './LightController'));
+const LinkBridge = React.lazy(() => import('./pages/LinkBridge'));
+const BridgeSetup = React.lazy(() => import('./pages/BridgeSetup'));
+const Debugger = React.lazy(() => import('./pages/Debugger'));
+const LightList = React.lazy(() => import(/* webpackPreload: true */ './pages/LightList'));
+const LightController = React.lazy(() => import(/* webpackPrefetch: true */ './pages/LightController'));
 
 function App() {
 	const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
@@ -37,6 +38,7 @@ function App() {
 							<Suspense fallback={<Spinner/>}>
 								<Switch>
 									<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
+									<Route path="/settings" render={() => <Settings bridge={bridge} username={username}/>}/>
 									<Route path="/:lightId" render={() => <LightsProvider><LightController/></LightsProvider>}/>
 									<Route path="/" render={() => bridge ? (username ? <LightsProvider><LightList/></LightsProvider> : <LinkBridge bridge={bridge} setUsername={setUsername} setBridge={setBridge}/>) : <BridgeSetup setBridge={setBridge}/>}/>
 								</Switch>

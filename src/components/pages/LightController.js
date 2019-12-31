@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import ColorWheel from "./ColorWheel";
+import ColorWheel from "../ColorWheel";
 import {Link, useParams} from 'react-router-dom';
-import {rgb_to_cie} from "../cie_rgb_converter";
-import ApiContext from "./ApiContext";
+import {rgb_to_cie} from "../../cie_rgb_converter";
+import ApiContext from "../ApiContext";
 import Octicon, {ChevronLeft} from '@primer/octicons-react';
-import LightListItem from "./LightListItem";
-import LoadingListItem from "./LoadingListItem";
-import {LightsContext} from "./LightsContext";
+import LightListItem from "../LightListItem";
+import LoadingListItem from "../LoadingListItem";
+import {LightsContext} from "../LightsContext";
 
 function LightController() {
 	const { api } = useContext(ApiContext);

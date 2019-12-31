@@ -1,0 +1,26 @@
+import React from 'react';
+import Nav from "../layout/Nav";
+import Octicon, {ChevronLeft} from "@primer/octicons-react";
+import {Link} from "react-router-dom";
+import useMediaQuery from "react-responsive/src/useMediaQuery";
+
+function Settings({bridge, username}) {
+	const isDark = useMediaQuery({query: '(prefers-color-scheme: dark)'});
+
+	const readOnlySettings = [['Bridge', bridge], ['Username', username], ['App theme', isDark ? 'Dark' : 'Light']];
+
+	return <>
+			<Nav title={<Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/>}/>
+			<div className="container">
+				{readOnlySettings.map(([setting, value]) =>
+					<div className="form-group" key={setting}>
+						<label htmlFor={setting}>{setting}</label>
+						<input id={setting} type="text" className="form-control" disabled value={value}/>
+					</div>
+				)}
+				<Link to="/debugger">Open debugger</Link>
+			</div>
+		</>;
+}
+
+export default Settings;

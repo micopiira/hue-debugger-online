@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import hue from 'hue-api';
-import {wrapPromise} from "../wrapPromise";
+import {wrapPromise} from "../../wrapPromise";
 
 function BridgeSetup({setBridge}) {
 
