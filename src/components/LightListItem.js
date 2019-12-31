@@ -12,7 +12,7 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 	return <div className={['card flex-fill'].concat(light.state.on ? 'text-dark' : 'text-light').join(' ')}
 				style={{backgroundColor}}>
 		<div className="card-body d-flex flex-wrap align-items-center"
-			 style={light.state.on && light.state.bri ? {paddingBottom: 0} : {}}>
+			 style={light.state.on && light.state.bri != null ? {paddingBottom: 0} : {}}>
 			<div className="row align-items-center flex-grow-1">
 				<div className="col-auto">{icon}</div>
 				<div className="col">
@@ -24,7 +24,7 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 					</div>
 				</div>
 			</div>
-			{light.state.on && light.state.bri && <>
+			{light.state.on && light.state.bri != null && <>
 				<div className="w-100"/>
 				<div className="row flex-grow-1">
 				<div className="col mt-2" style={{zIndex: 2}}>
