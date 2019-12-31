@@ -20,9 +20,7 @@ function App() {
 	const isDark = useMediaQuery({query: '(prefers-color-scheme: dark)'});
 
 	useEffect(() => {
-		if (bridge) {
-			localStorage.setItem('bridge', bridge);
-		}
+		bridge ? localStorage.setItem('bridge', bridge) : localStorage.removeItem('bridge');
 		if (username) {
 			localStorage.setItem('username', username);
 		}
@@ -40,7 +38,7 @@ function App() {
 								<Switch>
 									<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
 									<Route path="/:lightId" render={() => <LightsProvider><LightController/></LightsProvider>}/>
-									<Route path="/" render={() => bridge ? (username ? <LightsProvider><LightList/></LightsProvider> : <LinkBridge bridge={bridge} setUsername={setUsername}/>) : <BridgeSetup setBridge={setBridge}/>}/>
+									<Route path="/" render={() => bridge ? (username ? <LightsProvider><LightList/></LightsProvider> : <LinkBridge bridge={bridge} setUsername={setUsername} setBridge={setBridge}/>) : <BridgeSetup setBridge={setBridge}/>}/>
 								</Switch>
 							</Suspense>
 					</div>
