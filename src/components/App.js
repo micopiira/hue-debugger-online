@@ -18,7 +18,7 @@ const LightController = React.lazy(() => import(/* webpackPrefetch: true */ './p
 function App() {
 	const [bridge, setBridge] = useState(localStorage.getItem('bridge'));
 	const [username, setUsername] = useState(localStorage.getItem('username'));
-	const isDark = useMediaQuery({query: '(prefers-color-scheme: dark)'});
+	const isDark = useMediaQuery({query: 'not all and (prefers-color-scheme: light)'});
 
 	useEffect(() => {
 		bridge ? localStorage.setItem('bridge', bridge) : localStorage.removeItem('bridge');

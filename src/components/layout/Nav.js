@@ -3,7 +3,7 @@ import React from "react";
 import useMediaQuery from "react-responsive/src/useMediaQuery";
 
 function Nav({title, children, ...props}) {
-	const isDark = useMediaQuery({query: '(prefers-color-scheme: dark)'});
+	const isDark = useMediaQuery({query: 'not all and (prefers-color-scheme: light)'});
 
 	return <nav className={['navbar navbar-expand-lg mb-2'].concat(isDark ? ['navbar-dark bg-dark'] : ['navbar-light bg-light']).join(' ')} {...props}>
 		<div className="container">

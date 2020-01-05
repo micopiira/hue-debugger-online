@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import useMediaQuery from "react-responsive/src/useMediaQuery";
 
 function Settings({bridge, username}) {
-	const isDark = useMediaQuery({query: '(prefers-color-scheme: dark)'});
+	const isDark = useMediaQuery({query: 'not all and (prefers-color-scheme: light)'});
 
 	const readOnlySettings = [['Bridge', bridge], ['Username', username], ['App theme', isDark ? 'Dark' : 'Light']];
 
