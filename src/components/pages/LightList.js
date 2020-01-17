@@ -6,8 +6,10 @@ import LightListItem from "../LightListItem";
 import LoadingListItem from "../LoadingListItem";
 import {LightsContext} from "../LightsContext";
 import {resolveIcon} from "../../lightIconResolver";
+import ThemeContext from "../ThemeContext";
+import CustomSwitch from "../bootstrap/CustomSwitch";
 import {Link} from "react-router-dom";
-import { Settings } from "react-feather";
+import { Sun, Moon, Settings } from "react-feather";
 
 function LightList() {
 	const {api} = useContext(ApiContext);
@@ -25,6 +27,11 @@ function LightList() {
 	return (
 		<>
 			<Nav title="Hue online">
+				<Sun/>
+				<ThemeContext.Consumer>
+					{({isDark, setDark}) => <CustomSwitch id="themeToggler" checked={isDark} onChange={event => setDark(event.target.checked)}/>}
+				</ThemeContext.Consumer>
+				<Moon/>
 				<Link to="/settings" style={{color: 'inherit'}} className="ml-2"><Settings/></Link>
 			</Nav>
 			<div className="container">
