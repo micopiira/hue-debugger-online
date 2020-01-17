@@ -13,7 +13,7 @@ import { Sun, Moon, Settings } from "react-feather";
 
 function LightList() {
 	const {api} = useContext(ApiContext);
-	const {lights, fetchLights} = useContext(LightsContext);
+	const {lights, groups, fetchLights} = useContext(LightsContext);
 
 	const setLightState = (lightId, newState) => {
 		api.setLightState({lightId, newState})
@@ -35,17 +35,25 @@ function LightList() {
 				<Link to="/settings" style={{color: 'inherit'}} className="ml-2"><Settings/></Link>
 			</Nav>
 			<div className="container">
-				<div className="row row-cols-1 row-cols-md-2">
-					{Object.entries(lights).map(([lightId, light]) => {
-						return <div className="col d-flex p-1" key={light.uniqueid}><React.Suspense fallback={<LoadingListItem/>}>
-							<LightListItem light={light}
-										   lightId={lightId}
-										   setLightState={newState => setLightState(lightId, newState)}
-										   stretchedLink={`/${lightId}`}
-										   icon={<BulbIcon width="1.5rem" height="1.5rem" icon={resolveIcon(light)}/>}/>
-						</React.Suspense></div>
-					})}
-				</div>
+				{Object.values(groups).filter(group => group.type === 'Room' || group.type === 'Zone').filter(group => group.lights.length > 0).map(group =>
+					<div key={group.name}>
+						<h1 className="h6 text-muted text-uppercase">{group.name}</h1>
+						<div className="row row-cols-1 row-cols-md-2">
+							{group.lights.map(lightId => {
+								const light = lights[lightId];
+								console.log({lightId, lights, light});
+								return <div className="col d-flex p-1" key={light.uniqueid}><React.Suspense
+									fallback={<LoadingListItem/>}>
+									<LightListItem light={light}
+												   lightId={lightId}
+												   setLightState={newState => setLightState(lightId, newState)}
+												   stretchedLink={`/${lightId}`}
+												   icon={<BulbIcon width="1.5rem" height="1.5rem" icon={resolveIcon(light)}/>}/>
+								</React.Suspense></div>;
+							})}
+						</div>
+					</div>
+				)}
 			</div>
 		</>
 	);
