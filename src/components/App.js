@@ -41,7 +41,7 @@ function App() {
 			<ApiContext.Provider value={{hue: hueApi, api: bridgeApi}}>
 				<ThemeContext.Provider value={{isDark, setDark}}>
 					<BrowserRouter>
-						<div className={['App h-100'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')}>
+						<div className={['App'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')} style={{minHeight: '100%'}}>
 								<Suspense fallback={<Spinner/>}>
 									<Switch>
 										<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>

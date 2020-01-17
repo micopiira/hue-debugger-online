@@ -36,9 +36,11 @@ function LightList() {
 			</Nav>
 			<div className="container">
 				{Object.values(groups).filter(group => group.type === 'Room' || group.type === 'Zone').filter(group => group.lights.length > 0).map(group =>
-					<div key={group.name}>
-						<h1 className="h6 text-muted text-uppercase">{group.name}</h1>
-						<div className="row row-cols-1 row-cols-md-2">
+					<React.Fragment key={group.name}>
+						<div className="row no-gutters">
+						<strong className="text-muted text-uppercase">{group.name}</strong>
+						</div>
+						<div className="row no-gutters row-cols-1 row-cols-md-2">
 							{group.lights.map(lightId => {
 								const light = lights[lightId];
 								console.log({lightId, lights, light});
@@ -52,7 +54,7 @@ function LightList() {
 								</React.Suspense></div>;
 							})}
 						</div>
-					</div>
+					</React.Fragment>
 				)}
 			</div>
 		</>
