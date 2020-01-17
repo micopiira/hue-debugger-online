@@ -27,11 +27,11 @@ function LightList() {
 	return (
 		<>
 			<Nav title="Hue online">
-				<Sun/>
+				<Sun size={18}/>
 				<ThemeContext.Consumer>
 					{({isDark, setDark}) => <CustomSwitch id="themeToggler" checked={isDark} onChange={event => setDark(event.target.checked)}/>}
 				</ThemeContext.Consumer>
-				<Moon/>
+				<Moon size={20}/>
 				<Link to="/settings" style={{color: 'inherit'}} className="ml-2"><Settings/></Link>
 			</Nav>
 			<div className="container">
