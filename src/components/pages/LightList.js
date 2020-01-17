@@ -43,7 +43,6 @@ function LightList() {
 						<div className="row no-gutters row-cols-1 row-cols-md-2">
 							{group.lights.map(lightId => {
 								const light = lights[lightId];
-								console.log({lightId, lights, light});
 								return <div className="col d-flex p-1" key={light.uniqueid}><React.Suspense
 									fallback={<LoadingListItem/>}>
 									<LightListItem light={light}
