@@ -11,7 +11,7 @@ import {ArrowLeft} from "react-feather";
 function LightController() {
 	const { api } = useContext(ApiContext);
 	const { lightId } = useParams();
-	const {lights, fetchLights} = useContext(LightsContext);
+	const {lights, refetch} = useContext(LightsContext);
 	const light = lights[lightId];
 
 	const handleColorChange = ({r, g, b}) => {
@@ -19,7 +19,7 @@ function LightController() {
 		return setLightState({xy, on: true});
 	};
 
-	const setLightState = newState => api.setLightState({lightId, newState}).then(() => fetchLights());
+	const setLightState = newState => api.setLightState({lightId, newState}).then(() => refetch());
 
 	return (<>
 		{light ? <LightListItem light={light} lightId={lightId} setLightState={setLightState} icon={
