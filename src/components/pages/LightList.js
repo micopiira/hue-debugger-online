@@ -13,11 +13,11 @@ import { Sun, Moon, Settings } from "react-feather";
 
 function LightList() {
 	const {api} = useContext(ApiContext);
-	const {lights, groups, fetchLights} = useContext(LightsContext);
+	const {lights, groups, refetch} = useContext(LightsContext);
 
 	const setLightState = (lightId, newState) => {
 		api.setLightState({lightId, newState})
-			.then(() => fetchLights())
+			.then(() => refetch())
 			.catch(error => {
 				console.error(error);
 				alert(error);
