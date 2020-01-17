@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from "../layout/Nav";
-import Octicon, {ChevronLeft} from "@primer/octicons-react";
+import {ArrowLeft} from "react-feather";
 import {Link} from "react-router-dom";
 import useMediaQuery from "react-responsive/src/useMediaQuery";
 
@@ -10,7 +10,7 @@ function Settings({bridge, username}) {
 	const readOnlySettings = [['Bridge', bridge], ['Username', username], ['App theme', isDark ? 'Dark' : 'Light']];
 
 	return <>
-			<Nav title={<Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/>}/>
+			<Nav title={<ArrowLeft/>}/>
 			<div className="container">
 				{readOnlySettings.map(([setting, value]) =>
 					<div className="form-group" key={setting}>

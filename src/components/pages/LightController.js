@@ -3,10 +3,10 @@ import ColorWheel from "../ColorWheel";
 import {Link, useParams} from 'react-router-dom';
 import {rgb_to_cie} from "../../cie_rgb_converter";
 import ApiContext from "../ApiContext";
-import Octicon, {ChevronLeft} from '@primer/octicons-react';
 import LightListItem from "../LightListItem";
 import LoadingListItem from "../LoadingListItem";
 import {LightsContext} from "../LightsContext";
+import {ArrowLeft} from "react-feather";
 
 function LightController() {
 	const { api } = useContext(ApiContext);
@@ -23,7 +23,7 @@ function LightController() {
 
 	return (<>
 		{light ? <LightListItem light={light} lightId={lightId} setLightState={setLightState} icon={
-			<Link to="/" style={{color: 'inherit'}}><Octicon icon={ChevronLeft} size='medium' verticalAlign='middle'/></Link>
+			<Link to="/" style={{color: 'inherit'}}><ArrowLeft/></Link>
 		}/> : <LoadingListItem/>}
 		<div className="container mt-2">
 			<ColorWheel onColorClick={handleColorChange}/>

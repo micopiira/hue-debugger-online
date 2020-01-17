@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {handleJsonResponse} from "../../fetchUtils";
-import Octicon, {Alert} from '@primer/octicons-react';
+import {AlertTriangle} from "react-feather";
 
 const TOTAL_TIME_SECONDS = 30;
 
@@ -45,7 +45,7 @@ function LinkBridge({bridge, setUsername, setBridge}) {
 		</div>}
 		<div className="text-center">
 		<p className="lead">Press the link button on bridge {bridge}... <button className="btn btn-link" onClick={() => setBridge(null)}>Change bridge</button></p>
-			{progress === 0 ? <button className="btn btn-primary" onClick={() => setProgress(TOTAL_TIME_SECONDS)}><Octicon icon={Alert}/> Retry</button> :
+			{progress === 0 ? <button className="btn btn-primary" onClick={() => setProgress(TOTAL_TIME_SECONDS)}><AlertTriangle/> Retry</button> :
 				<div className="progress">
 					<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
 						 aria-valuenow={progressPercentage} aria-valuemin="0" aria-valuemax="100" style={{width: progressPercentage + '%'}}/>
