@@ -3,7 +3,7 @@ import CustomSwitch from "./bootstrap/CustomSwitch";
 
 function LoadingListItem() {
 	return (
-		<div className="card mb-2 text-light">
+		<div className="card mb-2 text-light flex-fill">
 			<div className="card-body">
 				<div className="row align-items-center mb-1">
 					<div className="col-auto">...</div>
