@@ -38,19 +38,20 @@ function LightList() {
 				{Object.values(groups).filter(group => group.type === 'Room' || group.type === 'Zone').filter(group => group.lights.length > 0).map(group =>
 					<React.Fragment key={group.name}>
 						<div className="row no-gutters">
-						<strong className="text-muted text-uppercase">{group.name}</strong>
+							<strong className="text-muted text-uppercase">{group.name}</strong>
 						</div>
 						<div className="row no-gutters row-cols-1 row-cols-md-2">
 							{group.lights.map(lightId => {
 								const light = lights[lightId];
-								return <div className="col d-flex p-1" key={light.uniqueid}><React.Suspense
-									fallback={<LoadingListItem/>}>
-									<LightListItem light={light}
+								return <div className="col d-flex p-1" key={light.uniqueid}>
+									<React.Suspense fallback={<LoadingListItem/>}>
+										<LightListItem light={light}
 												   lightId={lightId}
 												   setLightState={newState => setLightState(lightId, newState)}
 												   stretchedLink={`/${lightId}`}
 												   icon={<BulbIcon width="1.5rem" height="1.5rem" icon={resolveIcon(light)}/>}/>
-								</React.Suspense></div>;
+									</React.Suspense>
+								</div>;
 							})}
 						</div>
 					</React.Fragment>
