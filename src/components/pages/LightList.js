@@ -32,7 +32,7 @@ function LightList() {
 					{({isDark, setDark}) => <CustomSwitch id="themeToggler" checked={isDark} onChange={event => setDark(event.target.checked)}/>}
 				</ThemeContext.Consumer>
 				<Moon size={20}/>
-				<Link to="/settings" style={{color: 'inherit'}} className="ml-2"><Settings/></Link>
+				<Link to="/settings" style={{color: 'inherit', lineHeight: 1}} className="ml-2"><Settings size={20}/></Link>
 			</Nav>
 			<div className="container">
 				{Object.values(groups).filter(group => group.type === 'Room' || group.type === 'Zone').filter(group => group.lights.length > 0).map(group =>

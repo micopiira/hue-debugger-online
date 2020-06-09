@@ -1,6 +1,10 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {handleJsonResponse} from "../../fetchUtils";
-import {AlertTriangle} from "react-feather";
+import {AlertTriangle, Moon, Settings, Sun} from "react-feather";
+import Nav from "../layout/Nav";
+import ThemeContext from "../ThemeContext";
+import CustomSwitch from "../bootstrap/CustomSwitch";
+import {Link} from "react-router-dom";
 
 const TOTAL_TIME_SECONDS = 30;
 
@@ -37,6 +41,14 @@ function LinkBridge({bridge, setUsername, setBridge}) {
 	const progressPercentage = (progress * (100 / TOTAL_TIME_SECONDS)).toFixed(2);
 
 	return <div className="container pt-2">
+		<Nav title="Hue online">
+			<Sun size={18}/>
+			<ThemeContext.Consumer>
+				{({isDark, setDark}) => <CustomSwitch id="themeToggler" checked={isDark} onChange={event => setDark(event.target.checked)}/>}
+			</ThemeContext.Consumer>
+			<Moon size={20}/>
+			<Link to="/settings" style={{color: 'inherit', lineHeight: 1}} className="ml-2"><Settings size={20}/></Link>
+		</Nav>
 		{error && <div className="alert alert-danger" role="alert">
 			<strong>Error!</strong> {error}
 			<button type="button" className="close" onClick={() => {setError(null)}} aria-label="Close">
