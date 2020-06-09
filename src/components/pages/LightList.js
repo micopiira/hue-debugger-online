@@ -38,7 +38,7 @@ function LightList() {
 				{Object.values(groups).filter(group => group.type === 'Room' || group.type === 'Zone').filter(group => group.lights.length > 0).map(group =>
 					<React.Fragment key={group.name}>
 						<div className="row no-gutters">
-							<strong className="text-muted text-uppercase">{group.name}</strong>
+							<strong className="text-muted text-uppercase p-1">{group.name}</strong>
 						</div>
 						<div className="row no-gutters row-cols-1 row-cols-md-2">
 							{group.lights.map(lightId => {
