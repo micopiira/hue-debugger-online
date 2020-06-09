@@ -2,11 +2,16 @@ import React, {useEffect, useState} from 'react';
 import hue from 'hue-api';
 import ReactJsonView from 'react-json-view';
 
+const pages = ['lights', 'sensors', 'groups', 'schedules', 'scenes', 'rules', 'resourcelinks', 'capabilities'];
+
 function Lights({bridge, username}) {
 	const [data, setData] = useState({});
-	const [currentPage, setCurrentPage] = useState('lights');
 
-	const pages = ['lights', 'sensors', 'groups', 'schedules', 'scenes', 'rules', 'resourcelinks', 'capabilities'];
+	const [currentPage, setCurrentPage] = useState(window.location.hash.substr(1) || pages[0]);
+
+	window.addEventListener("hashchange", () => {
+		setCurrentPage(window.location.hash.substr(1));
+	}, false);
 
 	useEffect(() => {
 		if (bridge && username) {
@@ -33,9 +38,8 @@ function Lights({bridge, username}) {
 				<nav className="nav nav-pills flex-column">
 					{pages.map(page =>
 						// eslint-disable-next-line jsx-a11y/anchor-is-valid
-						<a key={page} href="#" style={{textTransform: 'capitalize'}}
-						   className={['nav-link'].concat(currentPage === page ? 'active' : []).join(' ')}
-						   onClick={() => setCurrentPage(page)}>
+						<a key={page} href={'#' + page} style={{textTransform: 'capitalize'}}
+						   className={['nav-link'].concat(currentPage === page ? 'active' : []).join(' ')}>
 							{page}
 						</a>
 					)}
