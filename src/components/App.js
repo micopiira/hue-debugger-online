@@ -42,14 +42,14 @@ function App() {
 				<ThemeContext.Provider value={{isDark, setDark}}>
 					<BrowserRouter>
 						<div className={['App'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')} style={{minHeight: '100%'}}>
-								<Suspense fallback={<Spinner/>}>
-									<Switch>
-										<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
-										<Route path="/settings" render={() => <Settings bridge={bridge} username={username}/>}/>
-										<Route path="/:lightId" render={() => <LightsProvider><LightController/></LightsProvider>}/>
-										<Route path="/" render={() => bridge ? (username ? <LightsProvider><LightList/></LightsProvider> : <LinkBridge bridge={bridge} setUsername={setUsername} setBridge={setBridge}/>) : <BridgeSetup setBridge={setBridge}/>}/>
-									</Switch>
-								</Suspense>
+							<Suspense fallback={<Spinner/>}>
+								<Switch>
+									<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
+									<Route path="/settings" render={() => <Settings bridge={bridge} username={username}/>}/>
+									<Route path="/:lightId" render={() => <LightsProvider><LightController/></LightsProvider>}/>
+									<Route path="/" render={() => bridge ? (username ? <LightsProvider><LightList/></LightsProvider> : <LinkBridge bridge={bridge} setUsername={setUsername} setBridge={setBridge}/>) : <BridgeSetup setBridge={setBridge}/>}/>
+								</Switch>
+							</Suspense>
 						</div>
 					</BrowserRouter>
 				</ThemeContext.Provider>
