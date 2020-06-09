@@ -12,7 +12,7 @@ function BridgeSetup({setBridge}) {
 	const [resource, setResource] = useState(null);
 
 	const fetchBridges = useCallback(() => {
-		setResource(wrapPromise(hue().bridgeDiscovery.nupnpScan()
+		setResource(wrapPromise(() => hue().bridgeDiscovery.nupnpScan()
 			.then(results =>
 				results
 					.map(result => result.internalipaddress)

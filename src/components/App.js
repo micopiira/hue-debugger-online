@@ -5,7 +5,6 @@ import ApiContext from "./ApiContext";
 import ErrorBoundary from "./ErrorBoundary";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Spinner from "./bootstrap/Spinner";
-import {LightsProvider} from "./LightsContext";
 import useMediaQuery from "react-responsive/src/useMediaQuery";
 import Settings from "./pages/Settings";
 import ThemeContext from "./ThemeContext";
@@ -42,12 +41,12 @@ function App() {
 				<ThemeContext.Provider value={{isDark, setDark}}>
 					<BrowserRouter>
 						<div className={['App'].concat(isDark ? ['text-light bg-dark'] : ['text-dark bg-light']).join(' ')} style={{minHeight: '100%'}}>
-							<Suspense fallback={<Spinner/>}>
+							<Suspense fallback={<Spinner/>} maxDelay={1000}>
 								<Switch>
 									<Route path="/debugger" render={() => <Debugger bridge={bridge} username={username}/>}/>
 									<Route path="/settings" render={() => <Settings bridge={bridge} username={username}/>}/>
-									<Route path="/:lightId" render={() => <LightsProvider><LightController/></LightsProvider>}/>
-									<Route path="/" render={() => bridge ? (username ? <LightsProvider><LightList/></LightsProvider> : <LinkBridge bridge={bridge} setUsername={setUsername} setBridge={setBridge}/>) : <BridgeSetup setBridge={setBridge}/>}/>
+									<Route path="/:lightId" render={() => <LightController/>}/>
+									<Route path="/" render={() => bridge ? (username ? <LightList/> : <LinkBridge bridge={bridge} setUsername={setUsername} setBridge={setBridge}/>) : <BridgeSetup setBridge={setBridge}/>}/>
 								</Switch>
 							</Suspense>
 						</div>

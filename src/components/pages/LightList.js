@@ -1,28 +1,30 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import BulbIcon from '../BulbIcon';
 import Nav from "../layout/Nav";
 import ApiContext from "../ApiContext";
 import LightListItem from "../LightListItem";
 import LoadingListItem from "../LoadingListItem";
-import {LightsContext} from "../LightsContext";
 import {resolveIcon} from "../../lightIconResolver";
 import ThemeContext from "../ThemeContext";
 import CustomSwitch from "../bootstrap/CustomSwitch";
 import {Link} from "react-router-dom";
 import { Sun, Moon, Settings } from "react-feather";
+import {wrapPromise} from "../../wrapPromise";
+
+const initialResource = wrapPromise(api => Promise.all([api.getLights(), api.getGroups()]));
 
 function LightList() {
 	const {api} = useContext(ApiContext);
-	const {lights, groups, refetch} = useContext(LightsContext);
+	const [LightsResource, setLightsResource] = useState(initialResource);
 
 	const setLightState = (lightId, newState) => {
 		api.setLightState({lightId, newState})
-			.then(() => refetch())
-			.catch(error => {
-				console.error(error);
-				alert(error);
+			.then(() => {
+				setLightsResource(wrapPromise(api => Promise.all([api.getLights(), api.getGroups()])));
 			});
 	};
+
+	const [lights, groups] = LightsResource.read(api);
 
 	return (
 		<>
