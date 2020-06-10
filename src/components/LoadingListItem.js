@@ -19,7 +19,7 @@ function LoadingListItem() {
 					</div>
 					<div className="col-3" style={{zIndex: 2}}>
 						<div className="float-right">
-							<CustomSwitch id="customSwitch" checked={false} onChange={() => {}}/>
+							<CustomSwitch id="customSwitch" checked={false} onChange={() => {}} disabled/>
 						</div>
 					</div>
 				</div>
