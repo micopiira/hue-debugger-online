@@ -8,7 +8,8 @@ export function wrapPromise(fn) {
 	return {
 		read(args) {
 			if (status === "pending") {
-				throw fn(args).then(
+				const p = typeof fn === "function" ? fn(args) : fn;
+				throw p.then(
 					r => {
 						status = "success";
 						result = r;

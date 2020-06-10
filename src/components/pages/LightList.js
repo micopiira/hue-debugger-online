@@ -17,12 +17,11 @@ function LightList() {
 	const {api} = useContext(ApiContext);
 	const [LightsResource, setLightsResource] = useState(initialResource);
 
-	const setLightState = (lightId, newState) => {
+	const setLightState = (lightId, newState) =>
 		api.setLightState({lightId, newState})
 			.then(() => {
 				setLightsResource(wrapPromise(api => Promise.all([api.getLights(), api.getGroups()])));
 			});
-	};
 
 	const [lights, groups] = LightsResource.read(api);
 

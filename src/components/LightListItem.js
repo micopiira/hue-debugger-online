@@ -3,6 +3,7 @@ import CustomRange from "./bootstrap/CustomRange";
 import {Link} from "react-router-dom";
 import React from "react";
 import {cie_to_rgb} from "../cie_rgb_converter";
+import Spinner from "./bootstrap/Spinner";
 
 function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 	const backgroundColor = (() => {
@@ -20,7 +21,11 @@ function LightListItem({lightId, light, setLightState, icon, stretchedLink}) {
 				</div>
 				<div className="col-3" style={{zIndex: 2}}>
 					<div className="float-right">
-						<CustomSwitch id={`customSwitch${lightId}`} checked={light.state.on} onChange={() => setLightState({on: !light.state.on})}/>
+						<React.Suspense fallback={<Spinner/>}>
+							<CustomSwitch id={`customSwitch${lightId}`}
+										  checked={light.state.on}
+										  onChange={() => setLightState({on: !light.state.on})}/>
+						</React.Suspense>
 					</div>
 				</div>
 			</div>
