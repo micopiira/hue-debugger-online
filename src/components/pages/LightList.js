@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {unstable_useTransition as useTransition, useContext, useState} from 'react';
 import BulbIcon from '../BulbIcon';
 import Nav from "../layout/Nav";
 import ApiContext from "../ApiContext";
@@ -16,11 +16,14 @@ const initialResource = wrapPromise(api => Promise.all([api.getLights(), api.get
 function LightList() {
 	const {api} = useContext(ApiContext);
 	const [LightsResource, setLightsResource] = useState(initialResource);
+	const [startTransition] = useTransition({timeoutMs: 1000});
 
 	const setLightState = (lightId, newState) =>
 		api.setLightState({lightId, newState})
 			.then(() => {
-				setLightsResource(wrapPromise(api => Promise.all([api.getLights(), api.getGroups()])));
+				startTransition(() => {
+					setLightsResource(wrapPromise(api => Promise.all([api.getLights(), api.getGroups()])));
+				});
 			});
 
 	const [lights, groups] = LightsResource.read(api);
