@@ -6,7 +6,7 @@
     "@primer/octicons-react": "^9.2.0",
     "bootstrap": "^4.4.1",
     "hue-api": "git+https://github.com/micopiira/hue-remote-api.git",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-json-view": "^1.19.1",
